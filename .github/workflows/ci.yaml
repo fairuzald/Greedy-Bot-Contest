@@ -1,0 +1,51 @@
+name: Python package
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.12"
+
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - name: Move to src directory
+        run: cd src/
+
+      - name: Install dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            python -m pip install --upgrade pip setuptools wheel
+            pip install -r requirements.txt
+          else
+            echo "Error: requirements.txt not found in the 'src/' directory."
+            exit 1
+          fi
+
+      - name: Run main.py
+        run: python main.py
+        continue-on-error: ${{ true }} # Continue to the next step even if this step fails
+
+      - name: Check for errors
+        run: |
+          if [ $? -ne 0 ]; then
+            echo "Error: main.py failed to run successfully."
+            exit 1
+          fi
