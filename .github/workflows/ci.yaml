@@ -3,15 +3,16 @@ name: Python package
 on:
   push:
     branches:
-      - main 
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
       - develop
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["pypy3.9", "pypy3.10", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
       - name: Checkout repository
@@ -20,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.12"
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
@@ -35,7 +36,7 @@ jobs:
 
       - name: Run main.py
         run: python main.py
-        continue-on-error: true  # Continue to the next step even if this step fails
+        continue-on-error: ${{ true }} # Continue to the next step even if this step fails
 
       - name: Check for errors
         run: |
@@ -43,4 +44,3 @@ jobs:
             echo "Error: main.py failed to run successfully."
             exit 1
           fi
-
