@@ -4,7 +4,7 @@ from typing import Optional
 from game.logic.base import BaseLogic
 from game.models import GameObject, Board, Position
 from ..util import get_direction
-
+from game.service.DiamondService import DiamondService
 
 class RandomLogic(BaseLogic):
     def __init__(self):
@@ -12,6 +12,10 @@ class RandomLogic(BaseLogic):
         self.goal_position: Optional[Position] = None
         self.current_direction = 0
 
+
+    
+    # def diamonds(self) -> List[GameObject]:
+    #     return [d for d in self.game_objects if d.type == ""]
     def next_move(self, board_bot: GameObject, board: Board):
         props = board_bot.properties
         # Analyze new state
@@ -20,8 +24,10 @@ class RandomLogic(BaseLogic):
             base = board_bot.properties.base
             self.goal_position = base
         else:
-            # Just roam around
-            self.goal_position = None
+            # Move to nearest diamond
+            diamondService = DiamondService()
+            self.goal_position = diamondService.get_nearest_diamond(board, board_bot.position)
+            
 
         current_position = board_bot.position
         if self.goal_position:
@@ -41,4 +47,5 @@ class RandomLogic(BaseLogic):
                 self.current_direction = (self.current_direction + 1) % len(
                     self.directions
                 )
+           
         return delta_x, delta_y
