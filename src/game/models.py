@@ -71,6 +71,10 @@ class Board:
     @property
     def bots(self) -> List[GameObject]:
         return [d for d in self.game_objects if d.type == "BotGameObject"]
+    
+    @property
+    def teleport(self) -> List[GameObject]:
+        return [d for d in self.game_objects if d.type == "TeleportGameObject"]
 
     @property
     def diamonds(self) -> List[GameObject]:
