@@ -4,7 +4,7 @@ from typing import Optional
 from game.logic.base import BaseLogic
 from game.models import GameObject, Board, Position
 from ..util import get_direction
-from game.service.DiamondService import DiamondService
+from game.service.diamond_service import DiamondService
 
 class RandomLogic(BaseLogic):
     def __init__(self):
@@ -25,7 +25,7 @@ class RandomLogic(BaseLogic):
             self.goal_position = base
         else:
             # Move to nearest diamond
-            diamondService = DiamondService()
+            diamondService = DiamondService(board_bot, board)
             self.goal_position = diamondService.get_nearest_diamond(board, board_bot.position)
             
 
