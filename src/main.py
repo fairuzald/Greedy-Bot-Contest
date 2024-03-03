@@ -15,7 +15,7 @@ BASE_URL = "http://localhost:3000/api"
 DEFAULT_BOARD_ID = 1
 CONTROLLERS = {
     "Random": RandomLogic,
-    "Alucard" : RandomLogic,
+    "AlucardGreedy": AlucardGreedy
 }
 
 ###############################################################################
@@ -59,8 +59,14 @@ group.add_argument(
 args = parser.parse_args()
 
 time_factor = int(args.time_factor)
+
+# API CONNECTION
 api = Api(args.host)
+
+# Create bot instance
 bot_handler = BotHandler(api)
+
+# Create board instance
 board_handler = BoardHandler(api)
 
 ###############################################################################
@@ -96,6 +102,8 @@ if not args.token:
 # Setup bot using token and play game
 #
 ###############################################################################
+
+# Look at class to 
 bot = bot_handler.get_my_info(args.token)
 logic_controller = args.logic
 if logic_controller not in CONTROLLERS:
@@ -174,7 +182,6 @@ while True:
     if not board_bot:
         # Managed to get game over
         break
-    start = time.time()
     # Calculate next move
     delta_x, delta_y = bot_logic.next_move(board_bot, board)
     # delta_x, delta_y = (1, 0)
@@ -197,8 +204,6 @@ while True:
         # Read new board state
         board = board_handler.get_board(current_board_id)
 
-    end = time.time()
-    print(end-start)
     # Get new state
     board_bot = board.get_bot(bot)
     if not board_bot:

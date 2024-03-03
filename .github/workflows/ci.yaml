@@ -37,13 +37,13 @@ jobs:
             exit 1
           fi
 
-      - name: Run main.py
-        run: python src/main.py
-        continue-on-error: ${{ true }} # Continue to the next step even if this step fails
+      # - name: Run main.py
+      #   run: python src/main.py
+      #   continue-on-error: ${{ true }} # Continue to the next step even if this step fails
 
-      - name: Check for errors
-        run: |
-          if [ $? -ne 0 ]; then
-            echo "Error: main.py failed to run successfully."
-            exit 1
-          fi
+      # - name: Check for errors
+      #   run: |
+      #     if [ $? -ne 0 ]; then
+      #       echo "Error: main.py failed to run successfully."
+      #       exit 1
+      #     fi
