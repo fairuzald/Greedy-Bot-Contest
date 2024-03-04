@@ -8,7 +8,7 @@ from game.bot_handler import BotHandler
 # from game.logic.random import RandomLogic
 from game.util import *
 from game.logic.base import BaseLogic
-from game.main.main import AlucardGreedy
+from game.alucard.main import AlucardGreedy
 import time
 init()
 BASE_URL = "http://localhost:3000/api"

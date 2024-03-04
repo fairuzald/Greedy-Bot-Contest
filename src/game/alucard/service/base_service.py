@@ -1,5 +1,5 @@
 from game.models import GameObject, Board, Position
-from ..util import get_direction
+from game.util import get_direction
 
 class BaseService:
     def __init__(self, bot: GameObject, board: Board):

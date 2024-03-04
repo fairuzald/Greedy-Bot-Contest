@@ -1,9 +1,9 @@
-from game.processor.processor import Processor
+from game.alucard.processor.processor import Processor
 from game.models import GameObject, Board
 from game.models import Position
 from typing import List
-from game.service.math_services import MathService
-from game.service.object_services import ObjectServices
+from game.alucard.service.math_services import MathService
+from game.alucard.service.object_services import ObjectServices
 class DiamondProcessor(Processor):
     # priority 1 nyari diamond nyala kalau yang lain ga nyalla
     status_diamond_processor = False

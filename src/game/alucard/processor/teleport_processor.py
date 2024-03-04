@@ -1,8 +1,8 @@
-from game.processor.processor import Processor
+from game.alucard.processor.processor import Processor
 from game.models import GameObject, Board, Position
-from game.service.math_services import MathService
-from game.service.object_services import ObjectServices
-from game.processor.diamond_processor import DiamondProcessor
+from game.alucard.service.math_services import MathService
+from game.alucard.service.object_services import ObjectServices
+from game.alucard.processor.diamond_processor import DiamondProcessor
 
 from typing import List
 

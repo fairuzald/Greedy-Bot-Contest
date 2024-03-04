@@ -4,10 +4,7 @@ from typing import Optional
 from game.logic.base import BaseLogic
 from game.models import GameObject, Board, Position
 from ..util import get_direction
-from game.processor.diamond_processor import DiamondProcessor
-from game.processor.teleport_processor import TeleportProcessor
-from game.processor.red_processor import RedProcessor
-from game.processor.main_processor import MainProcessor
+from game.alucard.processor.main_processor import MainProcessor
 import time
 class AlucardGreedy(BaseLogic):
     def __init__(self):

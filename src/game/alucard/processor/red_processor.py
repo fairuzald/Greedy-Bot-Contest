@@ -1,7 +1,7 @@
-from game.processor.processor import Processor
+from game.alucard.processor.processor import Processor
 from game.models import GameObject, Board
-from game.service.object_services import ObjectServices
-from game.service.math_services import MathService
+from game.alucard.service.object_services import ObjectServices
+from game.alucard.service.math_services import MathService
 class RedProcessor(Processor):
     def __init__(self, bot: GameObject, board: Board):
         super().__init__(bot, board)

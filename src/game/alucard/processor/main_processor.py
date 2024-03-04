@@ -1,11 +1,11 @@
-from game.processor.processor import Processor
+from game.alucard.processor.processor import Processor
 from game.models import GameObject, Board
 from game.models import Position
-from game.processor.diamond_processor import DiamondProcessor
-from game.processor.teleport_processor import TeleportProcessor
+from game.alucard.processor.diamond_processor import DiamondProcessor
+from game.alucard.processor.teleport_processor import TeleportProcessor
 from typing import List
-from game.service.math_services import MathService
-from game.service.object_services import ObjectServices
+from game.alucard.service.math_services import MathService
+from game.alucard.service.object_services import ObjectServices
 import time 
 class MainProcessor(Processor):
     # Current proses berisi string berupa teleport/diamond

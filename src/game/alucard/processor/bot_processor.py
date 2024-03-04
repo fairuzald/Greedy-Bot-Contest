@@ -1,7 +1,7 @@
 from processor.processor import Processor
 from game.models import GameObject, Board, Position
-from game.service.object_services import ObjectServices
-from game.service.math_services import MathService
+from game.alucard.service.object_services import ObjectServices
+from game.alucard.service.math_services import MathService
 class BotProcessor(Processor):
     # Nyala kalau nyampe threshold
     status_bot_processor = False 
