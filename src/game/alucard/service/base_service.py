@@ -16,6 +16,10 @@ class BaseService:
         delta_x_goal, delta_y_goal = self.get_delta(curr_pos, goal_pos)
         delta_x_base, delta_y_base = self.get_delta(curr_pos, self.bot.properties.base)
 
+        # Kalo udah di base, langsung return false
+        if curr_pos == self.bot.properties.base:
+            return (False, None)
+        
         # Check if kuadran sama
         if delta_x_goal * delta_x_base >= 0 and delta_y_goal * delta_y_base >= 0:
             # Checks if the base is in the same direction as the goal
@@ -23,3 +27,5 @@ class BaseService:
                 return (True, self.bot.properties.base)     # Menghasilkan benar dan posisi base sebagai goal position yang baru
             
         return (False, None)    # Menghasilkan false dan none
+    
+    
