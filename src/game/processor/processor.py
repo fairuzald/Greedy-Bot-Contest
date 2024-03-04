@@ -1,16 +1,21 @@
+from abc import ABC, abstractmethod
 from typing import List, Dict
-import threading
 from game.models import GameObject, Board
-class Processor(threading.Thread):
-    def __init__(self, bot:GameObject , board: Board):
-        super().__init__()
+
+class Processor(ABC):
+    bot: GameObject
+    board: Board
+    processed: bool
+    
+    def __init__(self, bot: GameObject, board: Board):
         self.bot = bot
         self.board = board
         self.processed = False
 
     def run(self):
         self.process()
-
+        
+    @abstractmethod
     def process(self):
-        # Fungsi utama
+        raise NotImplementedError()
         pass
