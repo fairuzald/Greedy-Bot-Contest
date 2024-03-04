@@ -7,7 +7,8 @@ from ..util import get_direction
 from game.processor.diamond_processor import DiamondProcessor
 from game.processor.teleport_processor import TeleportProcessor
 from game.processor.red_processor import RedProcessor
-
+from game.processor.main_processor import MainProcessor
+import time
 class AlucardGreedy(BaseLogic):
     def __init__(self):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
@@ -17,7 +18,8 @@ class AlucardGreedy(BaseLogic):
     def next_move(self, board_bot: GameObject, board: Board):
         curr_bot = board_bot
         props = curr_bot.properties
-        mainProcessor = DiamondProcessor(curr_bot,board)
+        mainProcessor = MainProcessor(curr_bot,board)
+        # start = time.time()
         
         # Analyze new state
         if props.diamonds == 5:
@@ -46,5 +48,6 @@ class AlucardGreedy(BaseLogic):
                 self.current_direction = (self.current_direction + 1) % len(
                     self.directions
                 )
-           
+        # end = time.time()
+        # print("Time: ", (end - start) * 1000)
         return delta_x, delta_y

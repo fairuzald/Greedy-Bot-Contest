@@ -5,6 +5,10 @@ class MathService:
     def getDistanceBetween (curr_pos:Position, target_pos:Position) -> int:
         return abs(curr_pos.x - target_pos.x) + abs(curr_pos.y - target_pos.y)
     
+    def getDistanceBetweenTransition (curr_pos:Position,transition:Position, target_pos:Position) -> int:
+        return abs(curr_pos.x - transition.x) + abs(curr_pos.y - transition.y) + abs(transition.x - target_pos.x) + abs(transition.y - target_pos.y)
+
+    
     @staticmethod 
     def getNearestObjectPosition(curr_pos:Position, target_pos: List[Position]) -> Position:
         nearest = None
@@ -25,7 +29,8 @@ class MathService:
         return objects
     
     @staticmethod
-    def isObjectInArea(bot_position:Position, target_pos: Position, area:int) -> bool:
-        if MathService.getDistanceBetween(bot_position, target_pos) <= area:
-            return True
+    def isObjectInArea(bot_position:Position ,target_pos: List[Position], area:int) -> bool:
+        for obj in target_pos:
+            if MathService.getDistanceBetween(bot_position, obj) <= area:
+                return True
         return False

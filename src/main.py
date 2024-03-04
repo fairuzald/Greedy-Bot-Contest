@@ -183,6 +183,7 @@ while True:
         # Managed to get game over
         break
     # Calculate next move
+    
     delta_x, delta_y = bot_logic.next_move(board_bot, board)
     # delta_x, delta_y = (1, 0)
     if not board.is_valid_move(board_bot.position, delta_x, delta_y):

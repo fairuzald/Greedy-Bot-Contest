@@ -3,25 +3,50 @@ from game.models import GameObject, Board, Position
 from game.service.math_services import MathService
 from game.service.object_services import ObjectServices
 from game.processor.diamond_processor import DiamondProcessor
+
 from typing import List
 
 class TeleportProcessor(Processor):
+    curr_process = "teleport"
+    
     def __init__(self, bot: GameObject, board: Board):
         super().__init__(bot, board)
-        self.mathService = MathService()
-        self.objectService = ObjectServices(self.board.game_objects)
         self.goal_position = None 
+        self.isGoToTeleport = False
     
     def get_teleport_position_list(self) -> List[Position]:
-        return [position.position for position in self.objectService.teleports]
+        return [obj.position for obj in ObjectServices.teleport(self.board.game_objects)]
     
     def get_nearest_teleport(self) -> Position:
-        return self.mathService.getNearestObjectPosition(self.bot.position, self.get_teleport_position_list())
+        return MathService.getNearestObjectPosition(self.bot.position, self.get_teleport_position_list())
     
     def get_nearest_diamond_by_teleport(self) -> Position:
-        # Assuming you have a get_diamond_position_list method in ObjectService
-        diamonds_position = [d.position for d in self.objectService.diamonds]
-        # diamondService = DiamondProcessor(self.bot, self.board)
+        diamonds = ObjectServices.diamonds(self.board.game_objects)
+        use_teleport = False
+        minimum_distance = float('inf')
+        for diamond in diamonds:
+            distance = MathService.getDistanceBetween(self.bot.position, diamond.position)
+            distance_use_teleport = MathService.getDistanceBetweenTransition(self.bot.position, self.get_nearest_teleport(), diamond.position)
+            # Bandingkan jarak yang ditempuh dengan teleport dan tidak
+            if(distance_use_teleport < distance):
+                if(distance_use_teleport < minimum_distance):
+                    minimum_distance = distance_use_teleport
+                    use_teleport = True
+            else:
+                if(distance < minimum_distance):
+                    minimum_distance = distance
+                    use_teleport = False
+        return use_teleport
+    
+    def process(self):
+        status_teleport = self.get_nearest_diamond_by_teleport()
+        if(status_teleport==False):
+            self.curr_process = "diamond"
+        else:
+            self.goal_position = self.get_nearest_teleport()
+            if(self.goal_position == self.bot.position):
+                self.curr_process = "diamond"
+            else:
+                self.curr_process = "teleport"
         
-        nearest = self.mathService.getNearestObjectPosition(self.get_nearest_teleport(), diamonds_position)
-        return nearest
+        
