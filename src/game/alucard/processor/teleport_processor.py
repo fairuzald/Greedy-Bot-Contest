@@ -3,6 +3,7 @@ from game.models import GameObject, Board, Position
 from game.alucard.service.math_services import MathService
 from game.alucard.service.object_services import ObjectServices
 from game.alucard.processor.diamond_processor import DiamondProcessor
+from game.util import position_equals
 
 from typing import List
 
@@ -44,7 +45,7 @@ class TeleportProcessor(Processor):
             self.curr_process = "diamond"
         else:
             self.goal_position = self.get_nearest_teleport()
-            if(self.goal_position == self.bot.position):
+            if(position_equals(self.bot.position, self.goal_position)):
                 self.curr_process = "diamond"
             else:
                 self.curr_process = "teleport"

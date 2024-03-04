@@ -19,10 +19,5 @@ class RedProcessor(Processor):
                 minimum_score = e.score
         return self.bot.score <= minimum_score
     
-    # Jika bot kita lebih rendah dari yang lain, maka arahkan bot kita ke red button
     def process(self):
-        red_position = ObjectServices.red_button(self.board.game_objects)[0].position
-        requirement1 = self.bot.properties.milliseconds_left <= 7000
-        requirement2 = MathService.getDistanceBetween(self.bot.position, red_position) <=4
-        if(requirement1 and requirement2  and self.minimum):
-            self.goal_position =  red_position
+        pass
