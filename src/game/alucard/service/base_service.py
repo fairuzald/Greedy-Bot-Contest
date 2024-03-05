@@ -1,5 +1,7 @@
 from game.models import GameObject, Board, Position
 from game.util import get_direction
+from game.alucard.service.math_services import MathService
+from game.alucard.processor.teleport_processor import TeleportProcessor
 
 class BaseService:
     def __init__(self, bot: GameObject, board: Board):
@@ -28,4 +30,11 @@ class BaseService:
             
         return (False, None)    # Menghasilkan false dan none
     
-    
+    def is_go_home (self, curr_pos: Position) -> bool:
+        distance = MathService.getDistanceBetween(curr_pos, self.bot.properties.base)
+        distance_use_teleport = MathService.getDistanceBetweenTransition(curr_pos, TeleportProcessor.get_nearest_teleport(), self.bot.properties.base)
+        if (distance_use_teleport < distance and distance_use_teleport * 1000 == self.bot.properties.milliseconds_left):
+            return True
+        elif distance * 1000 == self.bot.properties.milliseconds_left:
+            return True
+        return False

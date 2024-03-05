@@ -42,5 +42,6 @@ class AlucardGreedy(BaseLogic):
                     self.directions
                 )
         # end = time.time()
+        
         # print("Time: ", (end - start) * 1000)
         return delta_x, delta_y

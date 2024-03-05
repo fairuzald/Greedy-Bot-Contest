@@ -1,15 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import List, Dict
-from game.models import GameObject, Board
+from game.models import GameObject
 
 class Processor(ABC):
     bot: GameObject
-    board: Board
     processed: bool
     
-    def __init__(self, bot: GameObject, board: Board):
+    def __init__(self, bot: GameObject):
         self.bot = bot
-        self.board = board
         self.processed = False
 
     def run(self):
@@ -18,4 +15,3 @@ class Processor(ABC):
     @abstractmethod
     def process(self):
         raise NotImplementedError()
-        pass
