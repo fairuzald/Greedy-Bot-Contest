@@ -9,7 +9,7 @@ class BotProcessor(Processor):
     status_bot_processor = False 
     
     # delta x + delta y
-    threshold = 1
+    threshold = 2
 
     def __init__(self, bot: GameObject, board: Board):
         super().__init__(bot, board)
