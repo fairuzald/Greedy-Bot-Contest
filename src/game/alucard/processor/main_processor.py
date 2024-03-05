@@ -7,39 +7,51 @@ from typing import List
 from game.alucard.service.math_services import MathService
 from game.alucard.service.object_services import ObjectServices
 from game.alucard.processor.red_processor import RedProcessor
+from game.alucard.processor.bot_processor import BotProcessor
 from game.util import position_equals
 
 class MainProcessor(Processor):
     # Current proses berisi string berupa teleport/diamond
     curr_process = None
     goal_position: Position
-    teleports_position: List[Position] = []
-    red_position: List[Position] = []
     teleport_threshold = 4
     red_threshold = 4
+    bot_threshold = 2
+    teleports_position: List[Position] = []
+    red_position: List[Position] = []
+    enemy_position: List[Position] = []
 
     def __init__(self, bot: GameObject, board: Board):
         super().__init__(bot, board)
+        self.teleports_position = [obj.position for obj in ObjectServices.teleport(self.board.game_objects)]
+        self.red_position = [obj.position for obj in ObjectServices.red_button(self.board.game_objects)]
+        self.enemy_position = [obj.position for obj in ObjectServices.enemy(self.bot, self.board.game_objects)]
+        self.base_position = self.bot.properties.base
         self.diamondProcessor = DiamondProcessor(self.bot, self.board)
         self.teleportProcessor = TeleportProcessor(self.bot, self.board)
         self.redProcessor = RedProcessor(self.bot, self.board)
+        self.botProcessor = BotProcessor(self.bot, self.board, self.teleports_position)
 
+    
     def process(self):
-        if not self.teleports_position:
-            self.teleports_position = [obj.position for obj in ObjectServices.teleport(self.board.game_objects)]
-        if not self.red_position:
-            self.red_position = [obj.position for obj in ObjectServices.red_button(self.board.game_objects)]
-
-        
-        # if teleport in the area of bot, then process teleport
-        if MathService.isObjectInArea(self.bot.position, self.teleports_position, self.teleport_threshold):
+        is_enemy_near = MathService.isObjectInArea(self.bot.position, self.enemy_position, self.bot_threshold)
+        if is_enemy_near:
+            self.curr_process = "bot"
+        elif self.bot.properties.diamonds==5:
+            self.curr_process = "base"
+        elif MathService.isObjectInArea(self.bot.position, self.teleports_position, self.bot_threshold):
             self.curr_process = "teleport"
         elif self.bot.properties.milliseconds_left <= 7000 and MathService.isObjectInArea(self.bot.position, self.red_position, self.red_threshold) and self.redProcessor.minimum:
             self.curr_process = "red"
         else:
             self.curr_process = "diamond"
-            
-        if self.curr_process == "teleport":
+        
+        if self.curr_process == "bot":
+            self.botProcessor.process()
+            self.goal_position = self.botProcessor.goal_position
+        elif self.curr_process == "base":
+            self.goal_position = self.base_position
+        elif self.curr_process == "teleport":
             self.teleportProcessor.process()
             self.goal_position = self.teleportProcessor.goal_position
             self.curr_process = self.teleportProcessor.curr_process

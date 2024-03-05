@@ -22,4 +22,3 @@ class ObjectServices:
     def red_button(game_objects:List[GameObject]) -> List[GameObject]:
         return [d for d in game_objects if d.type == "DiamondButtonGameObject"]
     
-    
