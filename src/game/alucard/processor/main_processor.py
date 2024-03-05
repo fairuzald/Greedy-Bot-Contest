@@ -32,7 +32,11 @@ class MainProcessor(Processor):
 
         
         # if teleport in the area of bot, then process teleport
-        if MathService.isObjectInArea(self.bot.position, self.teleports_position, self.teleport_threshold):
+        if self.bot.properties.milliseconds_left>= 1000 :
+            self.diamondProcessor.process_cluster()
+            self.goal_position = self.diamondProcessor.goal_position
+            
+        elif MathService.isObjectInArea(self.bot.position, self.teleports_position, self.teleport_threshold):
             self.curr_process = "teleport"
         elif self.bot.properties.milliseconds_left <= 7000 and MathService.isObjectInArea(self.bot.position, self.red_position, self.red_threshold) and self.redProcessor.minimum:
             self.curr_process = "red"

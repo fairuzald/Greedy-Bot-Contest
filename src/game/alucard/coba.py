@@ -8,6 +8,7 @@ from game.alucard.processor.main_processor import MainProcessor
 from game.alucard.processor.bot_processor import BotProcessor
 from game.alucard.service.cobacoba import Coba
 import time
+from game.alucard.processor.diamond_processor import DiamondProcessor
 
 class Testingkejar(BaseLogic):
     def __init__(self):
@@ -28,8 +29,8 @@ class Testingkejar(BaseLogic):
             self.goal_position = base
         else:
             # mainProcessor.process()
-            coba = Coba()
-            self.goal_position = coba.kejar(board,"mybot")
+            coba = DiamondProcessor(board_bot,board)
+            self.goal_position = coba.get_best_cluster_diamond()
            
         current_position = curr_bot.position
         if self.goal_position:
@@ -51,4 +52,5 @@ class Testingkejar(BaseLogic):
                 )
         # end = time.time()
         # print("Time: ", (end - start) * 1000)
+        print(delta_x,delta_y)
         return delta_x, delta_y

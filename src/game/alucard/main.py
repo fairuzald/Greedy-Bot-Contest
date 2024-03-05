@@ -3,20 +3,22 @@ from typing import Optional
 
 from game.logic.base import BaseLogic
 from game.models import GameObject, Board, Position
-from ..util import get_direction
+from ..util import get_direction,clamp
 from game.alucard.processor.main_processor import MainProcessor
-from game.alucard.processor.bot_processor import BotProcessor
+from game.alucard.processor.teleport_processor import TeleportProcessor
+# from game.alucard.service.math_services import MathService
 import time
 class AlucardGreedy(BaseLogic):
     def __init__(self):
         self.directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         self.goal_position: Optional[Position] = None
         self.current_direction = 0
-
+        
+        
     def next_move(self, board_bot: GameObject, board: Board):
         curr_bot = board_bot
         props = curr_bot.properties
-        mainProcessor = BotProcessor(curr_bot,board)
+        mainProcessor = MainProcessor(curr_bot,board)
         # start = time.time()
         
         # Analyze new state
@@ -27,11 +29,13 @@ class AlucardGreedy(BaseLogic):
         else:
             mainProcessor.process()
             self.goal_position = mainProcessor.goal_position
-           
+        
         current_position = curr_bot.position
         if self.goal_position:
             # We are aiming for a specific position, calculate delta
-            delta_x, delta_y = get_direction(
+            print(self.goal_position)
+            tele = TeleportProcessor(curr_bot,board)
+            delta_x, delta_y = tele.get_direction_v2(
                 current_position.x,
                 current_position.y,
                 self.goal_position.x,

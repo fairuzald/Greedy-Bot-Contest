@@ -1,5 +1,7 @@
 from game.models import Position
 from typing import List
+from game.util import clamp
+
 class MathService:
     @staticmethod
     def getDistanceBetween (curr_pos:Position, target_pos:Position) -> int:

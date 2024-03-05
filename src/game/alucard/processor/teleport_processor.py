@@ -3,9 +3,10 @@ from game.models import GameObject, Board, Position
 from game.alucard.service.math_services import MathService
 from game.alucard.service.object_services import ObjectServices
 from game.alucard.processor.diamond_processor import DiamondProcessor
-from game.util import position_equals
+from game.util import position_equals,clamp
 
 from typing import List
+
 
 class TeleportProcessor(Processor):
     curr_process = "teleport"
@@ -50,4 +51,25 @@ class TeleportProcessor(Processor):
             else:
                 self.curr_process = "teleport"
         
-        
+    
+    def get_direction_v2(self,current_x, current_y, dest_x, dest_y):
+            delta_x = clamp(dest_x - current_x, -1, 1)
+            delta_y = clamp(dest_y - current_y, -1, 1)
+            
+            
+            portalPos = self.get_nearest_teleport()
+            
+            if (current_x+delta_x==portalPos.x and current_y==portalPos.y):
+                return (0, delta_y)
+            
+            elif(current_y+delta_y==portalPos.y and current_x==portalPos.x):
+                return (delta_x, 0)
+            else:
+                # make it like random using mod but only 1 step
+                if(delta_x == 0 or delta_y == 0):
+                    return(delta_x, delta_y)
+                else:
+                    if(current_x%2==1):
+                        return(delta_x, 0)
+                    else:
+                        return(0, delta_y)
