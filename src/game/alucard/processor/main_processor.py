@@ -29,6 +29,7 @@ class MainProcessor(Processor):
             self.teleports_position = [obj.position for obj in ObjectServices.teleport(self.board.game_objects)]
         if not self.red_position:
             self.red_position = [obj.position for obj in ObjectServices.red_button(self.board.game_objects)]
+
         
         # if teleport in the area of bot, then process teleport
         if MathService.isObjectInArea(self.bot.position, self.teleports_position, self.teleport_threshold):

@@ -5,6 +5,7 @@ from game.logic.base import BaseLogic
 from game.models import GameObject, Board, Position
 from ..util import get_direction
 from game.alucard.processor.main_processor import MainProcessor
+from game.alucard.processor.bot_processor import BotProcessor
 import time
 class AlucardGreedy(BaseLogic):
     def __init__(self):
@@ -15,7 +16,7 @@ class AlucardGreedy(BaseLogic):
     def next_move(self, board_bot: GameObject, board: Board):
         curr_bot = board_bot
         props = curr_bot.properties
-        mainProcessor = MainProcessor(curr_bot,board)
+        mainProcessor = BotProcessor(curr_bot,board)
         # start = time.time()
         
         # Analyze new state

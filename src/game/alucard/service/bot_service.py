@@ -2,7 +2,7 @@ from game.models import GameObject, Board, Position
 from game.util import get_direction
 from typing import List
 from game.alucard.service.math_services import MathService
-from processor.diamond_processor import DiamondProcessor
+from game.alucard.service.object_services import ObjectServices
 
 
 class BaseService:
@@ -22,23 +22,24 @@ class BaseService:
             if MathService.isObjectInArea(opsi, enemies_position, 1):
                 opsi_kabur.remove(opsi)
 
-        diamond_list = DiamondProcessor.get_diamond_position_list(self.board)
-        
-        arah_diamond = get_direction(curr_pos, MathService.getNearestObjectPosition(curr_pos, diamond_list))
+        diamond_list = [diamond.position for diamond in ObjectServices.diamonds(self.board.game_objects)]
+        tes = MathService.getNearestObjectPosition(curr_pos, diamond_list)
+        x,yes = get_direction(curr_pos.x, curr_pos.y,tes.x, tes.y )
 
         if opsi_kabur == []:        # Pasrah (trobos ae bot musuh)
-            return Position(x=curr_pos.x + arah_diamond[0], y=curr_pos.y + arah_diamond[1])
+            return Position(x=curr_pos.x + x, y=curr_pos.y + yes)
         else:
             for opsi in opsi_kabur:
-                if get_direction(curr_pos, opsi) == arah_diamond:
+                xdes, ydes = get_direction(curr_pos.x, curr_pos.y, opsi.x, opsi.y)
+                if xdes ==x and ydes == yes:   # Jika arah kabur sama dengan arah diamond terdekat
                     return opsi
             # Mencari tujuan kabur alternatif yang paling searah dengan diamond terdekat
-            if arah_diamond[0] == 0:   # arah ke atas atau bawah
+            if x == 0:   # arah ke atas atau bawah
                 for opsi in opsi_kabur:
                     if opsi.x == curr_pos.x+1 or opsi.x == curr_pos.x-1:
                         return opsi
-            elif arah_diamond[1] == 0:
+            elif yes == 0:
                 for opsi in opsi_kabur:
                     if opsi.y == curr_pos.y+1 or opsi.y == curr_pos.y-1:
                         return opsi
-            return Position(x=curr_pos.x + arah_diamond[0], y=curr_pos.y + arah_diamond[1]) 
+            return Position(x=curr_pos.x + x, y=curr_pos.y + yes) 

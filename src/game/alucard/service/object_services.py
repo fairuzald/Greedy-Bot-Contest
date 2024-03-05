@@ -8,7 +8,7 @@ class ObjectServices:
     
     @staticmethod
     def enemy(bot:Bot, game_objects:List[GameObject]) -> List[GameObject]:
-        return [d for d in game_objects if d.type == "BotGameObject" and d.properties.name != bot.properties.name]
+        return [d for d in game_objects if d.type == "DummyBotGameObject" and d.properties.name != bot.properties.name]
        
     @staticmethod
     def teleport(game_objects:List[GameObject]) -> List[GameObject]:
