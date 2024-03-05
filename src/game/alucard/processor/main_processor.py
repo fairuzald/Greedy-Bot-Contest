@@ -30,7 +30,7 @@ class MainProcessor(Processor):
         self.diamondProcessor = DiamondProcessor(self.bot, self.board)
         self.teleportProcessor = TeleportProcessor(self.bot, self.board)
         self.redProcessor = RedProcessor(self.bot, self.board)
-        self.botProcessor = BotProcessor(self.bot, self.board, self.teleports_position)
+        self.botProcessor = BotProcessor(self.bot, self.board, self.enemy_position)
 
     
     def process(self):
@@ -62,5 +62,5 @@ class MainProcessor(Processor):
         else:
             self.diamondProcessor.process()
             self.goal_position = self.diamondProcessor.goal_position
-
+        
         print("Current Process: ", self.curr_process)
