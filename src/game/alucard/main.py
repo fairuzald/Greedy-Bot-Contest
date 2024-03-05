@@ -22,14 +22,9 @@ class AlucardGreedy(BaseLogic):
         # start = time.time()
         
         # Analyze new state
-        if props.diamonds == 5:
-            # Move to base
-            base = board_bot.properties.base
-            self.goal_position = base
-        else:
-            mainProcessor.process()
-            self.goal_position = mainProcessor.goal_position
-        
+        mainProcessor.process()
+        self.goal_position = mainProcessor.goal_position
+           
         current_position = curr_bot.position
         if self.goal_position:
             # We are aiming for a specific position, calculate delta

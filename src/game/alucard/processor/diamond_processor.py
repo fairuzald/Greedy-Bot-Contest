@@ -12,8 +12,21 @@ class DiamondProcessor(Processor):
 
 
     def get_diamond_position_list(self) -> List[Position]:
-        diamond_list = [position.position for position in ObjectServices.diamonds(self.board.game_objects)]
-        return diamond_list
+        diamonds = ObjectServices.diamonds(self.board.game_objects)
+        # if self.bot.properties.diamonds==4:
+        dia1 = []
+        dia2 = []
+        for d in diamonds:
+            if d.properties.points==1:
+                dia1.append(d.position)
+            elif d.properties.points==2:
+                dia2.append(d.position)
+        if(self.bot.properties.diamonds==4):
+            return dia1
+        else:
+            # return concat dia1 and dia2
+            return dia1+dia2
+            
                 
     def get_nearest_diamond(self) -> Position:
         return self.mathService.getNearestObjectPosition(self.bot.position, self.get_diamond_position_list())
