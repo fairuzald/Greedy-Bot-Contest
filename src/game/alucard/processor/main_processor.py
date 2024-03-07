@@ -8,6 +8,7 @@ from game.alucard.service.math_services import MathService
 from game.alucard.service.object_services import ObjectServices
 from game.alucard.processor.red_processor import RedProcessor
 from game.alucard.processor.bot_processor import BotProcessor
+from game.alucard.processor.base_processor import BaseProcessor
 from game.util import position_equals
 
 class MainProcessor():
@@ -34,6 +35,7 @@ class MainProcessor():
         self.teleportProcessor = TeleportProcessor(self.bot, self.teleports_position, self.diamond_positions)
         self.redProcessor = RedProcessor(self.bot, self.get_enemies)
         self.botProcessor = BotProcessor(self.bot, self.diamond_positions, self.enemy_position, self.bot_threshold)
+        self.baseProcessor = BaseProcessor(self.bot, self.board)
 
     # Mendapatkan posisi diamond
     @property
@@ -61,7 +63,7 @@ class MainProcessor():
         is_enemy_near = MathService.isObjectInArea(self.bot.position, self.enemy_position, self.bot_threshold)
         if is_enemy_near:
             self.curr_process = "bot"
-        elif self.bot.properties.diamonds==5:
+        elif self.bot.properties.diamonds==5 or self.baseProcessor.is_go_home(self.bot) or self.baseProcessor.is_obj_same_direction(self.bot.position, self.bot.properties.base, self.goal_position)[0]:
             self.curr_process = "base"
         elif MathService.isObjectInArea(self.bot.position, self.teleports_position, self.bot_threshold):
             self.curr_process = "teleport"
@@ -71,9 +73,10 @@ class MainProcessor():
             self.curr_process = "diamond"
         
         if self.curr_process == "bot":
-            self.botProcessor.process()
+            self.botProcessor.process(self.goal_position)
             self.goal_position = self.botProcessor.goal_position
         elif self.curr_process == "base":
+            self.baseProcessor.process(self, self.get_diamond_position_list(self))
             self.goal_position = self.base_position
         elif self.curr_process == "teleport":
             self.teleportProcessor.process()

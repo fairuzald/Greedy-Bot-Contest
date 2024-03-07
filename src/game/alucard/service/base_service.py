@@ -14,19 +14,19 @@ class BaseService:
         delta_y = dest_pos.y - curr_pos.y
         return (delta_x, delta_y)
 
-    def is_base_same_direction(self, curr_pos: Position, goal_pos: Position) -> tuple[bool, Position]:      # Position -> self.goal_position yang baru (yaitu Position base jika bool=True, dan none jika bool=False)
+    def is_obj_same_direction(self, curr_pos: Position, obj_pos: Position, goal_pos: Position) -> tuple[bool, Position]:      # Position -> self.goal_position yang baru (yaitu Position base jika bool=True, dan none jika bool=False)
         delta_x_goal, delta_y_goal = self.get_delta(curr_pos, goal_pos)
-        delta_x_base, delta_y_base = self.get_delta(curr_pos, self.bot.properties.base)
+        delta_x_obj, delta_y_obj = self.get_delta(curr_pos, obj_pos)         # TODO: Buat fungsi untuk mencari diamond mana aja yang searah dengan arah pulang (dipake di is go home), caranya buat looping dan ganti variabel goal_pos jadi pos_base nya dan self.bot.properties.base jadi posisi tiap diamond yg mau di cek (pake loop). Abis tu kekumpul list of diamond yang searah dgn arah base, dicari yang nearest yang mana, abistu ulang lagi proses dari awal
 
         # Kalo udah di base, langsung return false
-        if curr_pos == self.bot.properties.base:
+        if curr_pos == obj_pos:
             return (False, None)
         
         # Check if kuadran sama
-        if delta_x_goal * delta_x_base >= 0 and delta_y_goal * delta_y_base >= 0:
+        if delta_x_goal * delta_x_obj >= 0 and delta_y_goal * delta_y_obj >= 0:
             # Checks if the base is in the same direction as the goal
-            if abs(delta_x_goal) >= abs(delta_x_base) and abs(delta_y_goal) >= abs(delta_y_base):
-                return (True, self.bot.properties.base)     # Menghasilkan benar dan posisi base sebagai goal position yang baru
+            if abs(delta_x_goal) >= abs(delta_x_obj) and abs(delta_y_goal) >= abs(delta_y_obj):
+                return (True, obj_pos)     # Menghasilkan benar dan posisi base sebagai goal position yang baru
             
         return (False, None)    # Menghasilkan false dan none
     
