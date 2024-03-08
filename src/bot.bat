@@ -1,1 +1,1 @@
-python main.py --logic AlucardGreedy --email stnasdioj@gmail.com --name mybot --password asldkalkd --team etimo
+python main.py --logic RayhanGreedy --email stnasdiodwadawawaj@gmail.com --name RAYYY --password asldkalkd --team etimo

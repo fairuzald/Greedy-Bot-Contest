@@ -29,6 +29,7 @@ class DiamondProcessor(Processor):
             
                 
     def get_nearest_diamond(self) -> Position:
+        
         return self.mathService.getNearestObjectPosition(self.bot.position, self.get_diamond_position_list())
     
     def isOnMiddle(self,width,height,current_pos) -> bool:
