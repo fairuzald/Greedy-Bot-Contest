@@ -10,14 +10,17 @@ from game.util import *
 from game.logic.base import BaseLogic
 from game.alucard.main import AlucardGreedy
 from game.alucard.coba import Testingkejar
+from game.rayhan.rayhan import RayhanLogic
 import time
 init()
-BASE_URL = "http://localhost:3000/api"
-DEFAULT_BOARD_ID = 1
+
+BASE_URL = "http://localhost:8082/api"
+DEFAULT_BOARD_ID = 2
 CONTROLLERS = {
     # "Random": RandomLogic,
-    "Kejar" : Testingkejar,
-    "AlucardGreedy": AlucardGreedy
+    # "Kejar" : Testingkejar,
+    "AlucardGreedy": AlucardGreedy,
+    "Rayhan":RayhanLogic
 }
 
 ###############################################################################

@@ -84,6 +84,7 @@ class MainProcessor():
             if position_equals(self.bot.position, self.red_position[0]):
                 self.curr_process = "diamond"
         else:
+            self.diamondProcessor.process()
             self.goal_position = self.diamondProcessor.goal_position
             
 

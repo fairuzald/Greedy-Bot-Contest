@@ -22,35 +22,35 @@ class DiamondProcessor(Processor):
         #  Get the nearest diamond position to the bot.
         return self.mathService.getNearestObjectPosition(self.bot.position, self.diamond_position_list)
 
-    def get_best_cluster_diamond(self) -> Position:
-        # Get the diamond position from the cluster with the maximum number of diamonds.
-        # Divides the board into four clusters and calculates the nearest diamond in each cluster.
-        # Returns the position with the maximum number of diamonds.
-        current_pos = self.bot.position
+    # def get_best_cluster_diamond(self) -> Position:
+    #     # Get the diamond position from the cluster with the maximum number of diamonds.
+    #     # Divides the board into four clusters and calculates the nearest diamond in each cluster.
+    #     # Returns the position with the maximum number of diamonds.
+    #     current_pos = self.bot.position
 
-        cluster = [0] * 4
-        nearest = [99999] * 4
-        positions = [Position(0, 0)] * 4
+    #     cluster = [0] * 4
+    #     nearest = [99999] * 4
+    #     positions = [Position(0, 0)] * 4
 
-        for diamond in self.diamond_position_list:
-            # Determine the cluster based on diamond position
-            if diamond.x < self.width / 2 and diamond.y < self.height / 2:
-                index = 0
-            elif diamond.x < self.width / 2 and diamond.y >= self.height / 2:
-                index = 1
-            elif diamond.x >= self.width / 2 and diamond.y < self.height / 2:
-                index = 2
-            else:
-                index = 3
+    #     for diamond in self.diamond_position_list:
+    #         # Determine the cluster based on diamond position
+    #         if diamond.x < self.width / 2 and diamond.y < self.height / 2:
+    #             index = 0
+    #         elif diamond.x < self.width / 2 and diamond.y >= self.height / 2:
+    #             index = 1
+    #         elif diamond.x >= self.width / 2 and diamond.y < self.height / 2:
+    #             index = 2
+    #         else:
+    #             index = 3
 
-            # Update nearest position and increment cluster count
-            if self.get_distance(current_pos, diamond) < nearest[index]:
-                nearest[index] = self.get_distance(current_pos, diamond)
-                positions[index] = diamond
-            cluster[index] += 1
+    #         # Update nearest position and increment cluster count
+    #         if self.get_distance(current_pos, diamond) < nearest[index]:
+    #             nearest[index] = self.get_distance(current_pos, diamond)
+    #             positions[index] = diamond
+    #         cluster[index] += 1
 
-        # Return the position with the maximum number of diamonds in the cluster
-        return positions[cluster.index(max(cluster))]
+    #     # Return the position with the maximum number of diamonds in the cluster
+    #     return positions[cluster.index(max(cluster))]
 
     def process(self):
         # Process method for the DiamondProcessor.
