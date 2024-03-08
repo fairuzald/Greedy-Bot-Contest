@@ -14,8 +14,8 @@ from game.rayhan.rayhan import RayhanLogic
 import time
 init()
 
-BASE_URL = "http://localhost:8082/api"
-DEFAULT_BOARD_ID = 2
+BASE_URL = "http://20.243.68.103:8082/api"
+DEFAULT_BOARD_ID = 6
 CONTROLLERS = {
     # "Random": RandomLogic,
     # "Kejar" : Testingkejar,
@@ -197,7 +197,7 @@ while True:
             "Invalid move will be ignored."
             + f" Your move: ({delta_x}, {delta_y}). Your position: ({board_bot.position.x}, {board_bot.position.y})",
         )
-        sleep(1)
+        sleep(0.5)
         continue
 
     try:
@@ -218,7 +218,7 @@ while True:
 
     # Don't spam the board more than it allows!
     # sleep(move_delay * time_factor)
-    sleep(1)
+    sleep(0.5)
 
 
 ###############################################################################

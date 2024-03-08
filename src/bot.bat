@@ -1,6 +1,1 @@
-start cmd /c  "python main.py --logic AlucardGreedy --email asjdakld@gmail.com --name mybot2 --password dasdasdasdads --team etimo"
-start cmd /c  "python main.py --logic AlucardGreedy --email asjdawkld@gmail.com --name mybotw2 --password dasdasdasdads --team etimo"
-start cmd /c  "python main.py --logic AlucardGreedy --email asjdaskld@gmail.com --name mybot22 --password dasdasdasdads --team etimo"
-start cmd /c  "python main.py --logic Rayhan --email asjsdadakldasdd@gmail.com --name mybot4 --password dasdasdasdads --team etimo"
-start cmd /c  "python main.py --logic Rayhan --email asjdakldasdasdasdd@gmail.com --name mybot42 --password dasdasdasdads --team etimo"
-start cmd /c  "python main.py --logic Rayhan --email asjdadasdasdakldasdd@gmail.com --name mybot41 --password dasdasdasdads --team etimo"
+python main.py --logic AlucardGreedy --email fairusdzdds@gmail.com --name aessdsdw --password asdasd --team etimo

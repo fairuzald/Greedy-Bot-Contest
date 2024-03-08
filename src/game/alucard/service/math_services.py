@@ -1,5 +1,7 @@
 from game.models import Position
 from typing import List
+from game.util import clamp
+
 class MathService:
     @staticmethod
     def getDistanceBetween (curr_pos:Position, target_pos:Position) -> int:
@@ -34,3 +36,28 @@ class MathService:
             if MathService.getDistanceBetween(bot_position, obj) <= area:
                 return True
         return False
+    
+    @staticmethod
+    def isSameDirection (curr_po:Position, target1_po:Position, target2_po :Position) -> bool:
+        if(target1_po.x > curr_po.x and target2_po.x > curr_po.x and target1_po.y > curr_po.y and target2_po.y > curr_po.y):
+            return True
+        elif(target1_po.x < curr_po.x and target2_po.x < curr_po.x and target1_po.y > curr_po.y and target2_po.y > curr_po.y):
+            return True
+        elif(target1_po.x < curr_po.x and target2_po.x < curr_po.x and target1_po.y < curr_po.y and target2_po.y < curr_po.y):
+            return True
+        elif(target1_po.x > curr_po.x and target2_po.x > curr_po.x and target1_po.y < curr_po.y and target2_po.y < curr_po.y):
+            return True
+        return False
+    
+    @staticmethod
+    def get_direction_v2(current_x, current_y, dest_x, dest_y):
+            delta_x = clamp(dest_x - current_x, -1, 1)
+            delta_y = clamp(dest_y - current_y, -1, 1)
+            
+            if(delta_x == 0 or delta_y == 0):
+                return(delta_x, delta_y)
+            else:
+                if(current_x%2==1):
+                    return(delta_x, 0)
+                else:
+                    return(0, delta_y)
