@@ -66,7 +66,14 @@ class AlucardGreedy(BaseLogic):
         if(delta_x == 0 or delta_y == 0):
                 return(delta_x, delta_y)
         else:
-                if(current_x%2==1):
+                xx = abs(dest_x - current_x)
+                yy = abs(dest_y - current_y)
+                if(xx == 1):
+                    return(0,delta_y)
+                elif(yy == 1):
+                    return(delta_x,0)
+                
+                elif(current_x%2==1):
                     return(delta_x, 0)
                 else:
                     return(0, delta_y)

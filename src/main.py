@@ -13,7 +13,7 @@ from game.logic.random import RandomLogic
 init()
 
 BASE_URL = "https://vbxhv5jk-8082.asse.devtunnels.ms/api"
-DEFAULT_BOARD_ID = 2
+DEFAULT_BOARD_ID = 1
 CONTROLLERS = {
     "Random": RandomLogic,
     # "Kejar" : Testingkejar,
@@ -194,7 +194,7 @@ while True:
             "Invalid move will be ignored."
             + f" Your move: ({delta_x}, {delta_y}). Your position: ({board_bot.position.x}, {board_bot.position.y})",
         )
-        sleep(1)      
+        sleep(0.4)      
         continue
 
     try:
@@ -215,7 +215,7 @@ while True:
 
     # Don't spam the board more than it allows!
     # sleep(move_delay * time_factor)
-    sleep(1)
+    sleep(0.4)
 
 ###############################################################################
 #
