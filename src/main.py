@@ -12,7 +12,7 @@ from game.alucard.main import AlucardGreedy
 from game.logic.random import RandomLogic
 init()
 
-BASE_URL = "http://20.243.68.103:8082/api"
+BASE_URL = "https://vbxhv5jk-8082.asse.devtunnels.ms/api"
 DEFAULT_BOARD_ID = 2
 CONTROLLERS = {
     "Random": RandomLogic,
@@ -194,7 +194,7 @@ while True:
             "Invalid move will be ignored."
             + f" Your move: ({delta_x}, {delta_y}). Your position: ({board_bot.position.x}, {board_bot.position.y})",
         )
-        sleep(0.5)      
+        sleep(1)      
         continue
 
     try:
@@ -215,7 +215,7 @@ while True:
 
     # Don't spam the board more than it allows!
     # sleep(move_delay * time_factor)
-    sleep(0.5)
+    sleep(1)
 
 ###############################################################################
 #
