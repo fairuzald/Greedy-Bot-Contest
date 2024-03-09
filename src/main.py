@@ -8,7 +8,7 @@ from game.bot_handler import BotHandler
 # from game.logic.random import RandomLogic
 from game.util import *
 from game.logic.base import BaseLogic
-from game.alucard.main import AlucardGreedy
+from game.alucard.alucard import AlucardGreedy
 from game.logic.random import RandomLogic
 init()
 

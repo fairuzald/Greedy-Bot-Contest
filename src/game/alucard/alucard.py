@@ -66,14 +66,7 @@ class AlucardGreedy(BaseLogic):
         if(delta_x == 0 or delta_y == 0):
                 return(delta_x, delta_y)
         else:
-                xx = abs(dest_x - current_x)
-                yy = abs(dest_y - current_y)
-                if(xx == 1):
-                    return(0,delta_y)
-                elif(yy == 1):
-                    return(delta_x,0)
-                
-                elif(current_x%2==1):
+                if(current_x%2==1):
                     return(delta_x, 0)
                 else:
                     return(0, delta_y)
@@ -114,32 +107,6 @@ class AlucardGreedy(BaseLogic):
         else:
             # If none of the conditions are met, return the goal position without modification.
             return goal_po
-        
-    # def dodge_tele_2dist(self, curr_po: Position, near_tele: Position, far_tele: Position, goal_po: Position) -> Position:
-    #     delta_x = near_tele.x - curr_po.x
-    #     delta_y = near_tele.y - curr_po.y
-        
-    #     if near_tele.x > goal_po.x:
-    #         if delta_x < 0 and delta_y > 0:
-    #             return Position(x=curr_po.x - 1, y=curr_po.y)
-    #         elif delta_x < 0 and delta_y < 0:
-    #             return Position(x=curr_po.x - 1, y=curr_po.y)
-    #     elif near_tele.x < goal_po.x:
-    #         if delta_x > 0 and delta_y > 0:
-    #             return Position(x=curr_po.x + 1, y=curr_po.y)
-    #         elif delta_x > 0 and delta_y < 0:
-    #             return Position(x=curr_po.x + 1, y=curr_po.y)
-    #     elif near_tele.y > goal_po.y:
-    #         if delta_x > 0 and delta_y < 0:
-    #             return Position(x=curr_po.x, y=curr_po.y - 1)
-    #         elif delta_x < 0 and delta_y < 0:
-    #             return Position(x=curr_po.x, y=curr_po.y - 1)
-    #     elif near_tele.y < goal_po.y:
-    #         if delta_x > 0 and delta_y > 0:
-    #             return Position(x=curr_po.x, y=curr_po.y + 1)
-    #         elif delta_x < 0 and delta_y > 0:
-    #             return Position(x=curr_po.x, y=curr_po.y + 1)
-        
             
             
     def get_nearest_diamond(self,bot_position:Position, diamond_position_list:List[Position]) -> Position:
@@ -212,7 +179,7 @@ class AlucardGreedy(BaseLogic):
 
     def bot_process(self, bot: GameObject, enemies_position: List[Position], diamond_position_list: List[Position], diamonds: List[GameObject], base_position: Position) -> Position:
         curr_pos = bot.position
-        dm_candidate = diamond_position_list.copy()  # Create a copy to avoid modifying the original list
+        dm_candidate = diamond_position_list.copy() 
         
         for enemy in enemies_position:
             delta_x_en, delta_y_en = self.get_direction_v2(curr_pos.x, curr_pos.y, enemy.x, enemy.y)
@@ -289,9 +256,7 @@ class AlucardGreedy(BaseLogic):
             if self.goal_position != teleports_position[0] and curplusportal == teleports_position[0]:
                 self.goal_position = self.dodge_tele(bot.position, teleports_position[0], teleports_position[1], self.goal_position)
                 delta_x, delta_y = self.get_direction_v2(bot.position.x, bot.position.y, self.goal_position.x, self.goal_position.y)
-            # elif (curplusportal.y == teleports_position[0].y == self.goal_position.y or curplusportal.x == teleports_position[0].x == self.goal_position.x):
-            #     self.goal_position = self.dodge_tele_2dist(bot.position, teleports_position[0], teleports_position[1], self.goal_position)
-            #     delta_x, delta_y = self.get_direction_v2(bot.position.x, bot.position.y, self.goal_position.x, self.goal_position.y)
+            
         else:
             # Roam around if no specific goal position is set.
             delta = self.directions[self.current_direction]
