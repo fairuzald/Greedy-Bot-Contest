@@ -1,0 +1,1 @@
+python main.py --logic AlucardGreedy --email=ydedayhe2h@email.com --name=RAYY22 --password=123456 --team etimo
