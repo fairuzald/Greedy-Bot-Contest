@@ -64,7 +64,7 @@ class DiamondProcessor(Processor):
         base_pos = self.bot.properties.base
 
         # Determine the goal position based on distances and conditions.
-        if MathService.getDistanceBetween(self.bot.position, nearest_diamond_with_base) > MathService.getDistanceBetween(self.bot.position, self.red_button_position):
+        if MathService.getDistanceBetween(self.bot.position, nearest_diamond_with_base) > MathService.getDistanceBetween(self.bot.position, self.red_button_position) and MathService.getDistanceBetween(self.bot.position, nearest_diamond_with_base) > 2:
             self.goal_position = self.red_button_position
         elif (
             MathService.getDistanceBetween(self.bot.position, nearest_diamond_with_base) > MathService.getDistanceBetween(self.bot.position, base_pos) and

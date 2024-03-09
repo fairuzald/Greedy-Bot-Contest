@@ -4,15 +4,19 @@ from game.util import clamp
 
 class MathService:
     @staticmethod
-    def getDistanceBetween (curr_pos:Position, target_pos:Position) -> int:
+    def getDistanceBetween(curr_pos: Position, target_pos: Position) -> int:
+        """Calculate the Manhattan distance between two positions."""
         return abs(curr_pos.x - target_pos.x) + abs(curr_pos.y - target_pos.y)
-    
-    def getDistanceBetweenTransition (curr_pos:Position,transition:Position, target_pos:Position) -> int:
+
+    @staticmethod 
+    def getDistanceBetweenTransition(curr_pos: Position, transition: Position, target_pos: Position) -> int:
+        """Calculate the combined Manhattan distance when transitioning through an intermediate position."""
         return abs(curr_pos.x - transition.x) + abs(curr_pos.y - transition.y) + abs(transition.x - target_pos.x) + abs(transition.y - target_pos.y)
 
-    
+
     @staticmethod 
-    def getNearestObjectPosition(curr_pos:Position, target_pos: List[Position]) -> Position:
+    def getNearestObjectPosition(curr_pos: Position, target_pos: List[Position]) -> Position:
+        """Find the position of the nearest object from a list."""
         nearest = None
         nearest_distance = float('inf')
         for obj in target_pos:
@@ -21,24 +25,27 @@ class MathService:
                 nearest = obj
                 nearest_distance = distance
         return nearest
-    
+
     @staticmethod
-    def getObjectsInArea(bot_position:Position, target_pos: List[Position], area:int) -> List[Position]:
+    def getObjectsInArea(bot_position: Position, target_pos: List[Position], area: int) -> List[Position]:
+        """Get a list of objects within a specified distance from a given position."""
         objects = []
         for obj in target_pos:
             if MathService.getDistanceBetween(bot_position, obj) <= area:
                 objects.append(obj)
         return objects
-    
+
     @staticmethod
-    def isObjectInArea(bot_position:Position ,target_pos: List[Position], area:int) -> bool:
+    def isObjectInArea(bot_position: Position, target_pos: List[Position], area: int) -> bool:
+        """Check if any object is within a specified distance from a given position."""
         for obj in target_pos:
             if MathService.getDistanceBetween(bot_position, obj) <= area:
                 return True
         return False
-    
+
     @staticmethod
-    def isSameDirection (curr_po:Position, target1_po:Position, target2_po :Position) -> bool:
+    def isSameDirection(curr_po: Position, target1_po: Position, target2_po: Position) -> bool:
+        """Check if two targets are in the same direction from the current position."""
         if(target1_po.x > curr_po.x and target2_po.x > curr_po.x and target1_po.y > curr_po.y and target2_po.y > curr_po.y):
             return True
         elif(target1_po.x < curr_po.x and target2_po.x < curr_po.x and target1_po.y > curr_po.y and target2_po.y > curr_po.y):
@@ -48,15 +55,17 @@ class MathService:
         elif(target1_po.x > curr_po.x and target2_po.x > curr_po.x and target1_po.y < curr_po.y and target2_po.y < curr_po.y):
             return True
         return False
-    
+        
+
     @staticmethod
     def get_direction_v2(current_x, current_y, dest_x, dest_y):
-            delta_x = clamp(dest_x - current_x, -1, 1)
-            delta_y = clamp(dest_y - current_y, -1, 1)
-            
-            if(delta_x == 0 or delta_y == 0):
+        """Get the direction (delta_x, delta_y) between two positions, clamping the values."""
+        delta_x = clamp(dest_x - current_x, -1, 1)
+        delta_y = clamp(dest_y - current_y, -1, 1)
+        
+        if(delta_x == 0 or delta_y == 0):
                 return(delta_x, delta_y)
-            else:
+        else:
                 if(current_x%2==1):
                     return(delta_x, 0)
                 else:

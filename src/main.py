@@ -9,18 +9,14 @@ from game.bot_handler import BotHandler
 from game.util import *
 from game.logic.base import BaseLogic
 from game.alucard.main import AlucardGreedy
-from game.alucard.coba import Testingkejar
-from game.rayhan.rayhan import RayhanLogic
-import time
 init()
 
 BASE_URL = "http://20.243.68.103:8082/api"
-DEFAULT_BOARD_ID = 6
+DEFAULT_BOARD_ID = 2
 CONTROLLERS = {
     # "Random": RandomLogic,
     # "Kejar" : Testingkejar,
     "AlucardGreedy": AlucardGreedy,
-    "Rayhan":RayhanLogic
 }
 
 ###############################################################################
@@ -197,7 +193,7 @@ while True:
             "Invalid move will be ignored."
             + f" Your move: ({delta_x}, {delta_y}). Your position: ({board_bot.position.x}, {board_bot.position.y})",
         )
-        sleep(0.5)
+        sleep(1)
         continue
 
     try:
@@ -218,7 +214,7 @@ while True:
 
     # Don't spam the board more than it allows!
     # sleep(move_delay * time_factor)
-    sleep(0.5)
+    sleep(1)
 
 
 ###############################################################################
