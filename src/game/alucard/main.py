@@ -203,23 +203,21 @@ class AlucardGreedy(BaseLogic):
                 self.goal_position = nearest_diamond_with_base
     
 
-    # def bot_process(self, bot:GameObject, enemies_position:List[Position], diamond_position_list: List[Position], diamonds:List[GameObject], base_position:Position) -> Position:
-    #     # Determine the escape position considering enemies and the nearest diamond.
-    #     curr_pos = bot.position
+    def bot_process(self, bot: GameObject, enemies_position: List[Position], diamond_position_list: List[Position], diamonds: List[GameObject], base_position: Position) -> Position:
+        curr_pos = bot.position
+        dm_candidate = diamond_position_list.copy()  # Create a copy to avoid modifying the original list
         
-    #     dm_candidate = diamond_position_list
-    #     for enemy in enemies_position:
-    #         delta_x_en, delta_y_en = self.get_direction_v2(curr_pos.x, curr_pos.y, enemy.x, enemy.y)
-    #         while dm_candidate!=None and (len(dm_candidate) > 0):
-    #             nearest_dm = self.get_nearest_diamond_base(diamonds=diamonds, diamond_position_list=dm_candidate, bot_position=curr_pos, base_position=base_position)
-    #             delta_x_dm, delta_y_dm = self.get_direction_v2(curr_pos.x, curr_pos.y, nearest_dm.x, nearest_dm.y)
-    #             if delta_x_en == delta_x_dm and delta_y_en == delta_y_dm:
-    #                 dm_candidate = dm_candidate.remove(nearest_dm)
-    #             else:
-    #                 return nearest_dm 
+        for enemy in enemies_position:
+            delta_x_en, delta_y_en = self.get_direction_v2(curr_pos.x, curr_pos.y, enemy.x, enemy.y)
+            
+            while len(dm_candidate) > 0:
+                nearest_dm = self.get_nearest_diamond_base(diamonds=diamonds, diamond_position_list=dm_candidate, bot_position=curr_pos, base_position=base_position)
+                delta_x_dm, delta_y_dm = self.get_direction_v2(curr_pos.x, curr_pos.y, nearest_dm.x, nearest_dm.y)
                 
-    #     first_candidate =  nearest_dm = self.get_nearest_diamond_base(diamonds=diamonds, diamond_position_list=diamond_position_list, bot_position=curr_pos, base_position=base_position)
-    #     return first_candidate 
+                if delta_x_en == delta_x_dm and delta_y_en == delta_y_dm:
+                    dm_candidate.remove(nearest_dm)
+                else:
+                    return nearest_dm
     
     def next_move(self, board_bot: GameObject, board: Board):
         bot = board_bot
@@ -227,7 +225,6 @@ class AlucardGreedy(BaseLogic):
         red_position = []
         enemy_position = []
         diamond_positions = []
-        enemies = []
         diamonds = []
 
         # Store the base position of the bot.
@@ -256,19 +253,19 @@ class AlucardGreedy(BaseLogic):
             teleports_position[0], teleports_position[1] = teleports_position[1], teleports_position[0]
 
         # Set the goal position based on various conditions.
-        if (bot.properties.milliseconds_left < 12000 and bot.properties.diamonds > 0) or bot.properties.diamonds == 5:
+        if (bot.properties.milliseconds_left < 10000 and bot.properties.diamonds > 0) or bot.properties.diamonds == 5:
             self.goal_position = base_position
             
         # elif self.bot.properties.milliseconds_left <= 7000 and self.isObjectInArea(self.bot.position, self.red_position, self.red_threshold) and self.redProcessor.is_bot_score_lower_than_enemies:
         #     self.goal_position = self.red_position[0]
-        # elif self.isObjectInArea(bot.position, enemy_position, 5):
-        #     self.goal_position =   self.bot_process(bot, enemy_position, diamond_positions, diamonds, base_position)
+        elif self.isObjectInArea(bot.position, enemy_position, 2):
+            self.goal_position =   self.bot_process(bot, enemy_position, diamond_positions, diamonds, base_position)
         else:
             # Process the diamond logic.
             self.diamond_process(base_position, diamonds, diamond_positions, bot, red_position[0])
 
         # Adjust goal position based on teleport locations.
-        if self.getDistanceWithPortalRelBase(bot.position, teleports_position[0], teleports_position[1], self.goal_position, base_position) < self.getDistanceBetween(bot.position, self.goal_position) + self.getDistanceBetween(self.goal_position, base_position):
+        if self.goal_position !=None and self.getDistanceWithPortalRelBase(bot.position, teleports_position[0], teleports_position[1], self.goal_position, base_position) < self.getDistanceBetween(bot.position, self.goal_position) + self.getDistanceBetween(self.goal_position, base_position):
             self.goal_position = teleports_position[0]
 
         if self.goal_position:
