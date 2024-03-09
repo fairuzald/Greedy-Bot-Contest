@@ -45,12 +45,13 @@ Our description of the algorithm is [here](https://youtu.be/9MXRM4zggRI?si=zADk3
 To run a single bot (in this example, we are running one bot with the logic contained in the file game/logic/random.py):
 ```python main.py --logic Random --email=your_email@example.com --name=your_name --password=your_password --team etimo```
 To run multiple bots simultaneously (in this example, we are running 4 bots with the same logic, which is game/logic/alucard.py):
-
+```
 Untuk windows
 ```./run-bots.bat```
 
 Untuk Linux / (possibly) macOS
 ```./run-bots.sh```
+```
 
 ## Authors
 
