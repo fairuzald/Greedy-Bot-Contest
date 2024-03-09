@@ -182,14 +182,20 @@ class AlucardGreedy(BaseLogic):
         dm_candidate = diamond_position_list.copy() 
         
         for enemy in enemies_position:
+            # Get direction of enemy from bot
             delta_x_en, delta_y_en = self.get_direction_v2(curr_pos.x, curr_pos.y, enemy.x, enemy.y)
             
             while len(dm_candidate) > 0:
+                # Get nearest diamond from bot and base
                 nearest_dm = self.get_nearest_diamond_base(diamonds=diamonds, diamond_position_list=dm_candidate, bot_position=curr_pos, base_position=base_position)
+                # Get direction of nearest diamond from bot
                 delta_x_dm, delta_y_dm = self.get_direction_v2(curr_pos.x, curr_pos.y, nearest_dm.x, nearest_dm.y)
                 
+                # Back to looping to search for another diamond if the nearest diamond is in the same direction as the enemy
                 if delta_x_en == delta_x_dm and delta_y_en == delta_y_dm:
                     dm_candidate.remove(nearest_dm)
+                
+                # Return the nearest diamond if it is not in the same direction as the enemy
                 else:
                     return nearest_dm
     
