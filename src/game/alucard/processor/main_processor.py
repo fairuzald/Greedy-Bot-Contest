@@ -59,7 +59,7 @@ class MainProcessor():
         self.diamondProcessor = DiamondProcessor(self.bot, self.board.width, self.board.height, self.diamond_positions, self.red_position[0], self.diamonds)
         self.redProcessor = RedProcessor(self.bot, self.enemies)
         self.botProcessor = BotProcessor(self.bot, self.diamond_positions, self.enemy_position, self.bot_threshold)
-
+    
     # Calculate the total distance from the bot's position to the goal position using portals and base.
     def getDistanceWithPortalRelBase(self) -> int:
         return (MathService.getDistanceBetween(self.bot.position, self.teleports_position[0]) +
